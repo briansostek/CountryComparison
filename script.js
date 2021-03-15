@@ -16,6 +16,7 @@ function process(data)
   var left= data[Math.floor(Math.random()*data.length)];
   var right= data[Math.floor(Math.random()*data.length)];
   var nerf=0;
+
   console.log(left);
   var gameOn=true;
   let leftDiv= document.getElementsByClassName('left')[0];
@@ -23,16 +24,17 @@ function process(data)
   let leftFlag= document.getElementsByClassName('leftFlag')[0];
   let rightFlag= document.getElementsByClassName('rightFlag')[0];
   let scoreDiv= document.getElementsByClassName('score')[0];
+  let dropdown= document.getElementsByClassName('dropdown')[0];
   leftDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
   rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
-  scoreDiv.innerHTML="Score: 0";
   leftDiv.addEventListener("click", leftClicked);
   rightDiv.addEventListener("click", rightClicked);
+  dropdown.addEventListener("click", () => {reset()});
   update();
 
   function leftClicked()
   {
-    if(left.population<right.population)
+    if(left[dropdown.value.toLowerCase()]<right[dropdown.value.toLowerCase()])
     {
       gameLost();
     }
@@ -44,18 +46,16 @@ function process(data)
         nerf=0;
       }
       right= data[Math.floor(Math.random()*data.length)]; //generate new country;
-      rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
       update();
       score++;
       nerf++;
-      scoreDiv.innerHTML="Score: "+score;
     }
   }
 
   function rightClicked()
   {
     nerf=0;
-    if(left.population>right.population) //if wrong
+    if(left[dropdown.value.toLowerCase()]>right[dropdown.value.toLowerCase()]) //if wrong
     {
       gameLost();
     }
@@ -63,23 +63,27 @@ function process(data)
     {
       left=right;
       right= data[Math.floor(Math.random()*data.length)]; //generate new country;
-      rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
       update();
       score++;
-      scoreDiv.innerHTML="Score: "+score;
     }
   }
   function update()
   {
-    leftDiv.innerHTML= left.name+"<br>Population:" + numberWithCommas(left.population);
+    leftDiv.innerHTML= left.name+"<br>"+ dropdown.value+": " + numberWithCommas(left[dropdown.value.toLowerCase()]);
     leftFlag.src=left.flag;
     rightDiv.innerHTML=right.name;
     rightFlag.src=right.flag;
+    scoreDiv.innerHTML="Score: "+score+" Mode: "+ dropdown.value;
 
+  }
+  function reset()
+  {
+    score=0;
+    update();
   }
   function gameLost()
   {
-    rightDiv.innerHTML="WRONG! YOU LOSE <br>"+right.name+`'s population was `+numberWithCommas(right.population);
+    rightDiv.innerHTML="WRONG! YOU LOSE <br>"+right.name+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()]);
     score=0;
   }
 
