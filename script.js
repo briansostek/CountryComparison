@@ -1,8 +1,12 @@
-console.log("hello");
+runGame();
+function runGame()
+{
+
 const colors= ["#9400d3", "#4b0082", "0000ff", "00ff00","ffff00","ff7f00","ff0000"];
 fetch('https://restcountries.eu/rest/v2/all')
   .then(response => response.json())
   .then(data => process(data));
+
 
   function numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -25,11 +29,11 @@ function process(data)
   let rightFlag= document.getElementsByClassName('rightFlag')[0];
   let scoreDiv= document.getElementsByClassName('score')[0];
   let dropdown= document.getElementsByClassName('dropdown')[0];
+  let options= document.getElementsByTagName('option');
   leftDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
   rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
   leftDiv.addEventListener("click", leftClicked);
   rightDiv.addEventListener("click", rightClicked);
-  dropdown.addEventListener("click", () => {reset()});
   update();
 
   function leftClicked()
@@ -76,8 +80,9 @@ function process(data)
     scoreDiv.innerHTML="Score: "+score+" Mode: "+ dropdown.value;
 
   }
-  function reset()
+  this.reset= function()
   {
+    console.log("Resetting");
     score=0;
     update();
   }
@@ -87,6 +92,5 @@ function process(data)
     score=0;
   }
 
-
-
+}
 }
