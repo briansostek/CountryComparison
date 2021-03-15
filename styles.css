@@ -1,0 +1,43 @@
+*
+{
+  font-size: 40px;
+  font-family: Helvetica;
+  text-align: center;
+}
+.leftDiv
+{
+  position: absolute;
+  left:0px;
+  width: 50%;
+  height:100%;
+  background-color: red;
+  align-items: center;
+}
+.leftDiv:hover
+{
+  opacity: 0.8;
+}
+h2
+{
+  height:50%;
+}
+.rightDiv
+{
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  height:100%;
+  background-color: blue;
+}
+.rightDiv:hover
+{
+  opacity: 0.8;
+}
+.score
+{
+  background-color: white;
+}
+img
+{
+  width:400px;
+}
