@@ -15,6 +15,7 @@ function process(data)
   console.log(data[0]);
   var left= data[Math.floor(Math.random()*data.length)];
   var right= data[Math.floor(Math.random()*data.length)];
+  var nerf=0;
   console.log(left);
   var gameOn=true;
   let leftDiv= document.getElementsByClassName('left')[0];
@@ -37,17 +38,23 @@ function process(data)
     }
     else //if correct
     {
+      if(nerf==5)
+      {
+        left=right;
+        nerf=0;
+      }
       right= data[Math.floor(Math.random()*data.length)]; //generate new country;
       rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
       update();
       score++;
+      nerf++;
       scoreDiv.innerHTML="Score: "+score;
     }
   }
 
   function rightClicked()
   {
-    console.log(left.population+" "+ right.population);
+    nerf=0;
     if(left.population>right.population) //if wrong
     {
       gameLost();
