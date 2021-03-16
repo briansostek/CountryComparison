@@ -8,13 +8,10 @@ fetch('https://restcountries.eu/rest/v2/all')
   .then(data => process(data));
 
 
-  function numberWithCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
 function process(data)
 {
-
+console.log(data);
   var score=0;
   console.log(data[0]);
   var left= data[Math.floor(Math.random()*data.length)];
@@ -30,10 +27,14 @@ function process(data)
   let scoreDiv= document.getElementsByClassName('score')[0];
   let dropdown= document.getElementsByClassName('dropdown')[0];
   let options= document.getElementsByTagName('option');
+  let gameOver= document.getElementsByClassName('gameOver')[0];
   leftDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
   rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
+  leftFlag.addEventListener("click", leftClicked);
   leftDiv.addEventListener("click", leftClicked);
   rightDiv.addEventListener("click", rightClicked);
+  rightFlag.addEventListener("click", rightClicked);
+  gameOver.addEventListener("click", restart);
   update();
 
   function leftClicked()
@@ -44,15 +45,16 @@ function process(data)
     }
     else //if correct
     {
-      if(nerf==5)
+      if(nerf==4)
       {
         left=right;
         nerf=0;
       }
       right= data[Math.floor(Math.random()*data.length)]; //generate new country;
-      update();
       score++;
       nerf++;
+      update();
+
     }
   }
 
@@ -67,8 +69,9 @@ function process(data)
     {
       left=right;
       right= data[Math.floor(Math.random()*data.length)]; //generate new country;
-      update();
       score++;
+      update();
+
     }
   }
   function update()
@@ -80,17 +83,41 @@ function process(data)
     scoreDiv.innerHTML="Score: "+score+" Mode: "+ dropdown.value;
 
   }
-  this.reset= function()
+  function reset()
   {
-    console.log("Resetting");
     score=0;
+    nerf=0;
+    gameOver.style.visibility="hidden";
     update();
   }
   function gameLost()
   {
-    rightDiv.innerHTML="WRONG! YOU LOSE <br>"+right.name+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()]);
+    nerf=0;
+console.log(gameOver);
+    gameOver.innerHTML="You Lose!! <br> "+right.name+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> Click here to restart";
+    gameOver.style.visibility="visible";
+
     score=0;
+  }
+  function numberWithCommas(x) {
+    if(!x)
+      return 0;
+
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  function restart()
+  {
+    if(gameOver.style.visibility=="visible")
+    {
+      console.log("restart");
+      left= data[Math.floor(Math.random()*data.length)];
+      right= data[Math.floor(Math.random()*data.length)];
+      reset();
+
+    }
   }
 
 }
+
+
 }
