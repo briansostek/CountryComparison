@@ -11,22 +11,21 @@ fetch('https://restcountries.eu/rest/v2/all')
 
 function process(data)
 {
-console.log(data);
+
   var score=0;
-  console.log(data[0]);
+
   var left= data[Math.floor(Math.random()*data.length)];
   var right= data[Math.floor(Math.random()*data.length)];
   var nerf=0;
 
-  console.log(left);
+
   var gameOn=true;
   let leftDiv= document.getElementsByClassName('left')[0];
   let rightDiv= document.getElementsByClassName('right')[0];
   let leftFlag= document.getElementsByClassName('leftFlag')[0];
   let rightFlag= document.getElementsByClassName('rightFlag')[0];
   let scoreDiv= document.getElementsByClassName('score')[0];
-  let dropdown= document.getElementsByClassName('dropdown')[0];
-  let options= document.getElementsByTagName('option');
+  const dropdown= document.querySelector('.dropdown');
   let gameOver= document.getElementsByClassName('gameOver')[0];
   leftDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
   rightDiv.backgroundColor= colors[Math.floor(Math.random()*colors.length)];
@@ -35,6 +34,7 @@ console.log(data);
   rightDiv.addEventListener("click", rightClicked);
   rightFlag.addEventListener("click", rightClicked);
   gameOver.addEventListener("click", restart);
+  dropdown.addEventListener('change', restart);
   update();
 
   function leftClicked()
@@ -50,7 +50,13 @@ console.log(data);
         left=right;
         nerf=0;
       }
-      right= data[Math.floor(Math.random()*data.length)]; //generate new country;
+
+
+      do
+      {
+        right= data[Math.floor(Math.random()*data.length)]; //generate new country;
+      } while(right==left);
+
       score++;
       nerf++;
       update();
@@ -93,7 +99,6 @@ console.log(data);
   function gameLost()
   {
     nerf=0;
-console.log(gameOver);
     gameOver.innerHTML="You Lose!! <br> "+right.name+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> Click here to restart";
     gameOver.style.visibility="visible";
 
@@ -109,12 +114,16 @@ console.log(gameOver);
   {
     if(gameOver.style.visibility=="visible")
     {
-      console.log("restart");
+
       left= data[Math.floor(Math.random()*data.length)];
-      right= data[Math.floor(Math.random()*data.length)];
-      reset();
+      do
+      {
+        right= data[Math.floor(Math.random()*data.length)]; //generate new country;
+      } while(right==left);
+
 
     }
+    reset();
   }
 
 }
