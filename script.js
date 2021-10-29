@@ -3,7 +3,7 @@ function runGame()
 {
 
 const colors= ["#9400d3", "#4b0082", "0000ff", "00ff00","ffff00","ff7f00","ff0000"];
-fetch('https://restcountries.eu/rest/v2/all')
+fetch('https://restcountries.com/rest/v2/all')
   .then(response => response.json())
   .then(data => process(data));
 
