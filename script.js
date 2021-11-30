@@ -82,10 +82,10 @@ function process(data)
   }
   function update()
   {
-    leftDiv.innerHTML= left.name+"<br>"+ dropdown.value+": " + numberWithCommas(left[dropdown.value.toLowerCase()]);
-    leftFlag.src=left.flag;
-    rightDiv.innerHTML=right.name;
-    rightFlag.src=right.flag;
+    leftDiv.innerHTML= left.name.common+"<br>"+ dropdown.value+": " + numberWithCommas(left[dropdown.value.toLowerCase()]);
+    leftFlag.src=left.flags.png;
+    rightDiv.innerHTML=right.name.common;
+    rightFlag.src=right.flags.png;
     scoreDiv.innerHTML="Score: "+score+" Mode: "+ dropdown.value;
 
   }
@@ -99,7 +99,7 @@ function process(data)
   function gameLost()
   {
     nerf=0;
-    gameOver.innerHTML="You Lose!! <br> "+right.name+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> Click here to restart";
+    gameOver.innerHTML="You Lose!! <br> "+right.name.common+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> Click here to restart";
     gameOver.style.visibility="visible";
 
     score=0;
