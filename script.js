@@ -11,7 +11,7 @@ fetch('https://restcountries.com/v3.1/all')
 
 function process(data)
 {
-
+  var hiscore= !localStorage.hiscore ? 0 : localStorage.hiscore;
   var score=0;
 
   var left= data[Math.floor(Math.random()*data.length)];
@@ -99,9 +99,14 @@ function process(data)
   function gameLost()
   {
     nerf=0;
-    gameOver.innerHTML="You Lose!! <br> "+right.name.common+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> Click here to restart";
+    if(score>hiscore)
+    {
+      hiscore=score;
+      localStorage.hiscore=score;
+    }
+    gameOver.innerHTML="You Lose!! <br> "+right.name.common+`'s `+" "+dropdown.value+ " was "+numberWithCommas(right[dropdown.value.toLowerCase()])+"<br> Score: "+score+"<br> High Score: "+hiscore+"<br> Click here to restart";
     gameOver.style.visibility="visible";
-
+    
     score=0;
   }
   function numberWithCommas(x) {
