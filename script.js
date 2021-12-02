@@ -82,7 +82,7 @@ function process(data)
   }
   function update()
   {
-    leftDiv.innerHTML= left.name.common+"<br>"+ dropdown.value+": " + numberWithCommas(left[dropdown.value.toLowerCase()]);
+    leftDiv.innerHTML= left.name.common+"<br>"+ dropdown.value+": " + numberWithCommas(left[dropdown.value.toLowerCase()]) + (dropdown.value == "Area" ? " km<sup>2</sup>": "");
     leftFlag.src=left.flags.png;
     rightDiv.innerHTML=right.name.common;
     rightFlag.src=right.flags.png;
